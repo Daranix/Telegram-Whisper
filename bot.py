@@ -1,11 +1,4 @@
-from asyncore import dispatcher
-from email import message
 import whisper
-
-#model = whisper.load_model("base")
-#result = model.transcribe("audio.ogg")
-#print(result["text"])
-
 import os
 from telegram import Update, Bot, File as TelegramFile, Audio, Voice
 from telegram.ext import  MessageHandler, filters, CommandHandler, CallbackContext, Application
@@ -24,7 +17,6 @@ def main():
     PROFILE = os.environ.get('PROFILE', 'dev')
     APP_URL = os.environ.get('APP_URL')
     application = Application.builder().token(TOKEN).build()
-
 
 
     # Commands
