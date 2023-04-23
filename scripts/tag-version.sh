@@ -1,5 +1,4 @@
-#! bin/bash
-
+#!/bin/bash
 #tag-version.sh
 #Based on the original script by Julian Sangillo (https://github.com/marketplace/actions/tag-version)
 #Use: tag-version {prod-branch} {test-branch} {dev-branch}
