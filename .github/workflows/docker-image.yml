@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: "Checkout"
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
 
     - name: Add Version Tag
       uses: juliansangillo/tag-version@v1.5
