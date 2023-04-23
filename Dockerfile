@@ -1,8 +1,8 @@
-FROM continuumio/miniconda3:latest
-RUN apt update && apt install python3 && apt install ffmpeg && apt install git
-RUN pip install git+https://github.com/openai/whisper.git
-RUN pip install python-telegram-bot --pre
-RUN pip install python-dotenv
+FROM python:3.9-slim
 ADD ./bot.py /app/bot.py
+ADD ./requirements.txt /app/requirements.txt
 WORKDIR /app
+RUN pip install --upgrade pip
+RUN pip install --upgrade "jax[cpu]"
+RUN pip install -r requirements.txt
 CMD python bot.py

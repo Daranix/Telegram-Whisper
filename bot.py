@@ -1,4 +1,5 @@
-import whisper
+#import whisper
+from whisper_jax import FlaxWhisperPipline
 import os
 from telegram import Update, Bot, File as TelegramFile, Audio, Voice
 from telegram.ext import MessageHandler, filters, CommandHandler, CallbackContext, Application
@@ -13,7 +14,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 logger.info("Downloading model ... ")
-model = whisper.load_model("base")
+#model = whisper.load_model("base")
+pipeline = FlaxWhisperPipline("openai/whisper-small")
 
 logger.info("Model downloaded")
 
@@ -36,9 +38,10 @@ async def proccessAudio(update: Update, context: CallbackContext):
 
     # download the voice note as a file
     ftemp = tempfile.NamedTemporaryFile()
-    await audio_file.download(out=ftemp)
+    await audio_file.download_to_drive(ftemp.name)
     await update.message.reply_text("Your audio is processing ... wait a few seconds")
-    result = model.transcribe(ftemp.name)
+    #result = model.transcribe(ftemp.name)
+    result = pipeline(ftemp.name)
     ftemp.close()
     await update.message.reply_text(result["text"])
 
@@ -65,6 +68,7 @@ def main():
 
     # start the bot
     if PROFILE == 'prod':
+        logger.info(f"Starting webhook on port :{PORT}")
         application.run_webhook(listen="0.0.0.0",
                                 port=PORT,
                                 url_path=TOKEN,
