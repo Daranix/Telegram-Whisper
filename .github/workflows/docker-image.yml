@@ -12,11 +12,12 @@ jobs:
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
+      - name: update version tag
+        uses: christophebedard/tag-version-commit@v1
         with:
-          fetch-depth: 0
-      - name: Add Version Tag
-        id: tag_version
-        run: ./scripts/tag-version.sh master test develop
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version_regex: 'version: ([0-9]+\.[0-9]+\.[0-9]+)'
+          check_entire_commit_message: true          
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
