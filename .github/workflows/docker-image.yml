@@ -15,6 +15,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Add Version Tag
+        id: tag_version
         run: ./scripts/tag-version.sh master test develop
 
       - name: Login to Docker Hub
@@ -30,4 +31,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest, ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ steps.vars.outputs.revision }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest, ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ steps.tag_version.outputs.revision }}
