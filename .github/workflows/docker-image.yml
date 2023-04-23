@@ -25,9 +25,9 @@ jobs:
 
       - name: Build and push Docker images
         uses: docker/build-push-action@v3.3.0
+        #run: "echo Pushing ${{ github.event.repository.name }}:${{ steps.vars.outputs.revision }}"
         with:
           context: .
           file: ./Dockerfile
           push: true
-          run: "echo Pushing ${{ github.event.repository.name }}:${{ steps.vars.outputs.revision }}"
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest, ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ steps.vars.outputs.revision }}
