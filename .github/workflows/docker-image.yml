@@ -13,6 +13,7 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v2
       - name: update version tag
+        id: tag_version
         uses: christophebedard/tag-version-commit@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -32,4 +33,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest, ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ steps.tag_version.outputs.revision }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest, ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ steps.tag_version.outputs.tag }}
