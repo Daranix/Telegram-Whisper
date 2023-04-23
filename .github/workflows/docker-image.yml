@@ -15,11 +15,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Add Version Tag
-        uses: juliansangillo/tag-version@v1.5
-        with:
-          production-branch: master
-          test-branch: test
-          dev-branch: develop
+        run: ./scripts/tag-version.sh
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
